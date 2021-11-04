@@ -8,15 +8,22 @@ import com.example.dogtown.network.DogApi
 import com.example.dogtown.network.RandomDogApiResponse
 import kotlinx.coroutines.launch
 
+/**
+ * The [ViewModel] that is attached to the [OverviewFragment].
+ */
 class MainViewModel : ViewModel() {
 
+    // The internal MutableLiveData that stores the status of the most recent request
     private val _lastApiResponse = MutableLiveData<RandomDogApiResponse>()
+    // The external immutable LiveData for the request status
     val lastApiResponse: LiveData<RandomDogApiResponse> = _lastApiResponse
 
     init {
         getNewDog()
     }
-
+    /**
+     * Call getNewDog() on init so we can display status immediately.
+     */
     fun getNewDog() {
         viewModelScope.launch {
             // The response from https://zenquotes.io/api/random is a list of 1 quote, so we

@@ -16,11 +16,15 @@ private const val BASE_URL = "https://dog.ceo/api/"
 private val networkLoggingInterceptor =
     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-//
+/**
+ * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
+ */
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
-//  call build() to create the Retrofit object
+/**
+ * The Retrofit object with the Moshi converter.
+ */
 private val retrofit = Retrofit.Builder()
     .client(OkHttpClient.Builder().addInterceptor(networkLoggingInterceptor).build())
     .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -30,7 +34,9 @@ private val retrofit = Retrofit.Builder()
 /**
  * https://zenquotes.io/#docs
  */
-//
+/**
+ * A public interface that exposes the [getRandomDogImage] method
+ */
 interface DogApiService {
 
     @GET("breeds/image/random")
@@ -41,6 +47,9 @@ interface DogApiService {
     suspend fun getRandomDogImageByBreed(@Path("breed") breed: String): RandomDogApiResponse
 
 }
+/**
+ * A public Api object that exposes the lazy-initialized Retrofit service
+ */
 
 object DogApi {
     val retrofitService: DogApiService by lazy { retrofit.create(DogApiService::class.java) }
