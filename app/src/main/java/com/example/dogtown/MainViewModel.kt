@@ -1,51 +1,60 @@
 package com.example.dogtown
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.dogtown.network.DogApi
-import com.example.dogtown.network.RandomDogApiResponse
+import androidx.lifecycle.*
+import com.example.dogtown.database.DogImageDao
+import com.example.dogtown.database.DogImageEntity
+import com.example.dogtown.network.DogImage
+import com.example.dogtown.network.DogImageApi
 import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
-class MainViewModel : ViewModel() {
 
-    // The internal MutableLiveData that stores the status of the most recent request
-    private val _lastApiResponse = MutableLiveData<RandomDogApiResponse>()
-    // The external immutable LiveData for the request status
-    val lastApiResponse: LiveData<RandomDogApiResponse> = _lastApiResponse
+class MainViewModel(private val dogImageDao: DogImageDao) : ViewModel() {
+
+    private val _currentlyDisplayedImage = MutableLiveData<DogImage>()
+    val currentlyDisplayedImage: LiveData<DogImage> = _currentlyDisplayedImage
 
     init {
         getNewDog()
     }
-    /**
-     * Call getNewDog() on init so we can display status immediately.
-     */
+
     fun getNewDog() {
         viewModelScope.launch {
-            // The response from https://zenquotes.io/api/random is a list of 1 quote, so we
             // are getting the first item in the list from the response.
-            _lastApiResponse.value = DogApi.retrofitService.getRandomDogImage()
+            _currentlyDisplayedImage.value = DogImageApi.retrofitService.getRandomDogImage()
         }
+    }
+
+    fun addDog(dogImageEntity: DogImageEntity)
+    {
+        viewModelScope.launch {
+            dogImageDao.addDogImage(dogImageEntity)
+        }
+    }
+
+    fun deleteMostRecentDog(){
+        viewModelScope.launch {
+            dogImageDao.deleteDog()
+        }
+    }
+
+    fun getAllDogs(): LiveData<List<DogImageEntity>>
+    {
+        return dogImageDao.getAllDogImages().asLiveData()
     }
 }
 
-//   public class UserModel extends ViewModel {
-//       private final MutableLiveData<User> userLiveData = new MutableLiveData<>();
-//
-//       public LiveData<User> getUser() {
-//           return userLiveData;
-//       }
-//
-//       public UserModel() {
-//           // trigger user load.
-//       }
-//
-//       void doAction() {
-//           // depending on the action, do necessary business logic calls and update the
-//           // userLiveData.
-//       }
-//   }
+class MainViewModelFactory(
+    private val dogImageDao: DogImageDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(dogImageDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+
+}
+
