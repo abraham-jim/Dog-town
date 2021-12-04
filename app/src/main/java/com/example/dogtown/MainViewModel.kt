@@ -10,20 +10,13 @@ import kotlinx.coroutines.launch
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
-<<<<<<< HEAD
+
 
 class MainViewModel(private val dogImageDao: DogImageDao) : ViewModel() {
 
     private val _currentlyDisplayedImage = MutableLiveData<DogImage>()
     val currentlyDisplayedImage: LiveData<DogImage> = _currentlyDisplayedImage
-=======
-class MainViewModel : ViewModel() {
 
-    // The internal MutableLiveData that stores the status of the most recent request
-    private val _lastApiResponse = MutableLiveData<RandomDogApiResponse>()
-    // The external immutable LiveData for the request status
-    val lastApiResponse: LiveData<RandomDogApiResponse> = _lastApiResponse
->>>>>>> e456e34330306de82125850b9fa3ba83e7481ab0
 
     init {
         getNewDog()
