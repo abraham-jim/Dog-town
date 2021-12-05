@@ -5,43 +5,43 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button"
         android:layout_width="161dp"
         android:layout_height="49dp"
-        android:text="Fetch"
+        android:layout_marginBottom="60dp"
+        android:text="Fetch."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.825" />
+        app:layout_constraintTop_toBottomOf="@+id/DogImageHolder" />
 
     <ImageView
         android:id="@+id/DogImageHolder"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_width="376dp"
+        android:layout_height="383dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.502"
         tools:srcCompat="@tools:sample/avatars" />
+
 
     <Button
         android:id="@+id/prevButton"
+
         android:layout_width="161dp"
         android:layout_height="49dp"
-        android:layout_marginTop="131dp"
-        android:layout_marginBottom="120dp"
-        android:text="Prev..."
+        android:layout_marginBottom="60dp"
+        android:text="Prev ..."
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.697"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/DogImageHolder"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DogImageHolder" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
