@@ -10,6 +10,10 @@ Have a button that lets the user generate a new image
 
 Sample app screenshot:
 
+![DogTown1](https://user-images.githubusercontent.com/73762759/145702166-e50cfb25-b12e-4b62-bd5f-242e19961572.png)
+
+![DogTown2](https://user-images.githubusercontent.com/73762759/145702170-90f138a2-99c0-4928-b6d2-7fcb27e61fea.png)
+
 
 Notes about the API:
 The main endpoint we’ll be utilizing is: https://dog.ceo/api/breeds/image/random 
